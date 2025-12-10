@@ -58,35 +58,54 @@ export default function GpaDashboard() {
         })
     }
 
-    // Calculation Logic
-    const calculateYearStats = (year) => {
+    // Calculation Logic - Calculate Semester GPA
+    const calculateSemesterGPA = (semester) => {
         let totalPoints = 0
         let totalCredits = 0
 
-        const semestersInYear = SEMESTERS.filter(s => s.year === year)
+        const semGrades = grades[semester.id] || {}
+        const semElectives = selectedElectives[semester.id] || []
 
-        semestersInYear.forEach(sem => {
-            const semGrades = grades[sem.id] || {}
-            const semElectives = selectedElectives[sem.id] || []
+        const courses = [
+            ...(semester.courses || []),
+            ...(semester.electives ? semester.electives.filter(e => semElectives.includes(e.code)) : [])
+        ]
 
-            const courses = [
-                ...(sem.courses || []),
-                ...(sem.electives ? sem.electives.filter(e => semElectives.includes(e.code)) : [])
-            ]
-
-            courses.forEach(course => {
-                if (course.isNonGpa) return
-                const grade = semGrades[course.code]
-                if (grade && GRADE_POINTS[grade] !== undefined) {
-                    totalPoints += GRADE_POINTS[grade] * course.credits
-                    totalCredits += course.credits
-                }
-            })
+        courses.forEach(course => {
+            if (course.isNonGpa) return
+            const grade = semGrades[course.code]
+            if (grade && GRADE_POINTS[grade] !== undefined) {
+                totalPoints += GRADE_POINTS[grade] * course.credits
+                totalCredits += course.credits
+            }
         })
 
         return {
             gpa: totalCredits > 0 ? totalPoints / totalCredits : 0,
             credits: totalCredits
+        }
+    }
+
+    // Calculate Year GPA - Average of two semester GPAs
+    const calculateYearStats = (year) => {
+        const semestersInYear = SEMESTERS.filter(s => s.year === year)
+
+        if (semestersInYear.length === 0) {
+            return { gpa: 0, credits: 0, semesters: [] }
+        }
+
+        const semesterStats = semestersInYear.map(sem => calculateSemesterGPA(sem))
+
+        // Year GPA = (Sem1 GPA + Sem2 GPA) / 2
+        const totalSemGPA = semesterStats.reduce((sum, sem) => sum + sem.gpa, 0)
+        const yearGPA = semesterStats.length > 0 ? totalSemGPA / semesterStats.length : 0
+
+        const totalCredits = semesterStats.reduce((sum, sem) => sum + sem.credits, 0)
+
+        return {
+            gpa: yearGPA,
+            credits: totalCredits,
+            semesters: semesterStats
         }
     }
 

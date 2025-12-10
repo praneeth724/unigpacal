@@ -27,7 +27,7 @@ export default function SignInContent() {
                     Welcome Back
                 </h2>
                 <p className="text-muted-foreground text-sm">
-                    Sign in to continue to your dashboard
+                    Sign in to continue to University GPA Calculator
                 </p>
             </div>
 
