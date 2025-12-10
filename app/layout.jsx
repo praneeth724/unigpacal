@@ -5,7 +5,7 @@ import NextAuthProvider from "@/components/NextAuthProvider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-    title: "GPA Calculator",
+    title: "University GPA Calculator",
     description: "Calculate your Semester and Final GPA",
 };
 

@@ -16,7 +16,7 @@ export default function LoginScreen() {
                         <span className="text-3xl font-bold text-white">A+</span>
                     </div>
                     <CardTitle className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600">
-                        GPA Calculator
+                        University GPA Calculator
                     </CardTitle>
                     <CardDescription className="text-gray-500 text-lg">
                         Track your academic journey with elegance

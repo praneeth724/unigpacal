@@ -22,7 +22,7 @@ export default function SignIn() {
                                 <GraduationCap className="h-12 w-12" />
                             </div>
                         </div>
-                        <h1 className="text-3xl font-bold mb-2">GPA Calculator</h1>
+                        <h1 className="text-3xl font-bold mb-2">University GPA Calculator</h1>
                         <p className="text-primary-foreground/90 text-sm">
                             Track your academic journey with ease
                         </p>
@@ -47,7 +47,7 @@ export default function SignIn() {
 
                 {/* Footer */}
                 <div className="text-center mt-6 text-sm text-muted-foreground">
-                    <p>New to GPA Calculator? Get started in seconds!</p>
+                    <p>New to University GPA Calculator? Get started in seconds!</p>
                 </div>
             </div>
         </div>
